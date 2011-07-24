@@ -1,0 +1,14 @@
+Simulator für Mensch-ärgere-Dich-nicht
+(simulator for ludo)
+
+Untersuchen der Auswirkung von
+- Größe des Spielfeldes in Abhängigkeit der Anzahl der Mitspieler
+- verschiedene Strategien
+- Wer hat einen Vorteil bei 5 Mitspielern auf einem 6er-Brett
+
+
+Evtl. spätere Möglichkeiten:
+- Objekte (Würfel, Spielfigur, Brett, Strategien) für das Untersuchen anderer Spiele bereitstellen
+
+
+
