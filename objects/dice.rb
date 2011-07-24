@@ -1,6 +1,10 @@
+#class dice should not be instantiated
+#use SingleDice etc. instead
+
 class Dice
   DICEMIN = 1
   DICEMAX = 6
+  attr_reader :lastRoll      #lastRoll is set in specific dice class
   
   def initialize
     srand
@@ -13,6 +17,22 @@ class Dice
   def min
     DICEMIN
   end
+  
+  # roll n times or until specified result is reached
+  # returns the number of rolls or false, if result is not reached
+  
+  # eg. roll 3 times or until a 6 is rolled:
+  		#SingleDice.multiple_roll(3){|u| u.lastRoll == 6}
+  # eg. how long does it take to roll doubles?
+        #DoubleDice.multiple_roll(100){|u| u.double?}
+  def multiple_roll(n, &result_check)
+    n.times do |index|
+      self.roll
+      return index+1 if (yield(self))
+    end
+    return false
+  end
+  
   
   protected
   def roll(*val)
@@ -30,7 +50,7 @@ end
 class SingleDice < Dice
   
   def roll(*val)
-    super(val[0])
+    @lastRoll = super(val[0])
   end
   
   def test(count)
@@ -41,4 +61,28 @@ class SingleDice < Dice
     end
     return retVal
   end 
+  
+  
+end
+
+class DoubleDice < Dice
+
+  attr_reader :lastRoll
+  def initialize
+    super
+    @lastRoll = Array.new(2,0)
+  end
+  
+  def roll(*val)
+    unless val
+      @lastRoll = [super, super]
+    else
+      @lastRoll = [super(val[0]), super(val[1])]
+    end
+  end
+  
+  def double?
+    @lastRoll[0] > 0 && @lastRoll[0] == @lastRoll[1]
+  end
+  
 end
